@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import './style.css'
 
 // function TodoList() {
 class TodoList extends Component {
@@ -13,10 +14,16 @@ class TodoList extends Component {
 	}
 	render() {
 		return (
-			// fragment相当于隐藏的div模块
+			// fragment相当于隐藏的div模块，其实react里面的一个组件
 			<Fragment>
+				{/* jsx语法注释是这么写的
+				可以写多行注释*/}
 				<div>
+					{/* label标签中的for关键字替换成htmlFor */}
+					<label htmlFor="insertArea">输入内容</label>
 					<input
+						id="insertArea"
+						className='input'
 						value={this.state.inputValue}
 						// 事件绑定的时候都是需要bind(this)进行操作的
 						onChange={this.handleInputChange.bind(this)}
@@ -29,13 +36,14 @@ class TodoList extends Component {
 						this.state.list.map((item, index) => {
 							// 
 							return <li
-							// 通常标签都会绑定一个key，不绑定的话会报警告
+								// 通常标签都会绑定一个key，不绑定的话会报警告
 								key={index}
 								// 在这里添加onclick事件是点击进行删除
 								// 绑定事件的同时进行参数传递
-								onClick={this.handleItemDelete.bind(this,index)}
+								onClick={this.handleItemDelete.bind(this, index)}
+								// 让输入的内容不被转义
+								dangerouslySetInnerHTML={{ __html: item }}
 							>
-								{item}
 							</li>
 						})
 					}
@@ -62,10 +70,10 @@ class TodoList extends Component {
 		// 定义一个常量，作为list的拷贝，然后改变数组的切片位置
 		const list = [...this.state.list];
 		// 删除下标为index的选项，删除一个，相当于数组中的切片
-		list.splice(index,1);
+		list.splice(index, 1);
 		// 任何状态的改变都是需要调用this.setState完成的
 		this.setState({
-			list:list
+			list: list
 		})
 		console.log(index)
 	}
