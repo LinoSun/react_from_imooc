@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import './style.css'
+import TodoItem from './TodoItem';
 
 // function TodoList() {
 class TodoList extends Component {
@@ -35,16 +36,16 @@ class TodoList extends Component {
 						// 数组都有一个map方法
 						this.state.list.map((item, index) => {
 							// 
-							return <li
-								// 通常标签都会绑定一个key，不绑定的话会报警告
-								key={index}
-								// 在这里添加onclick事件是点击进行删除
-								// 绑定事件的同时进行参数传递
-								onClick={this.handleItemDelete.bind(this, index)}
-								// 让输入的内容不被转义
-								dangerouslySetInnerHTML={{ __html: item }}
-							>
-							</li>
+							return (
+								<div>
+									{/* 传值 */}
+									<TodoItem 
+									content={item} 
+									index={index}
+									// 传递方法的时候需要在方法之后绑定bind(this) 来改写this的指向
+									deleteItem={this.handleItemDelete.bind(this)} />
+								</div>
+							)
 						})
 					}
 				</ul>
